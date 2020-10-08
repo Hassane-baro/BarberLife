@@ -9,7 +9,7 @@ import {stringifyValueWithProperty} from "react-native-web/dist/exports/StyleShe
 
 const USER_BASE_URL = "http://localhost:4545/api/v1";
 
-export const getCurrentUser = token => async dispatch => {
+export const getCurrentUser = (onSuccess , onError) => async dispatch => {
     dispatch(request({}));
     const authorization = JSON.parse( JSON.stringify( authHeader() ) )
     const headers = {
@@ -24,9 +24,11 @@ export const getCurrentUser = token => async dispatch => {
         AsyncStorage.setItem('user', JSON.stringify(user));
         setUser(user);
         dispatch({type: userConstants.GET_CURRENT_SUCCESS, user});
+        onSuccess && onSuccess();
     }).catch((error) => {
         console.error(error);
         dispatch(failure(error));
+        onError && onError();
     });
 
 };

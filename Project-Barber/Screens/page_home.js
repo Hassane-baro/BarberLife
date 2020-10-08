@@ -6,7 +6,7 @@ import {getCurrentUser} from "../Actions";
 class Home extends React.Component {
     componentDidMount() {
         if(this.props.currentUser == null || this.props.currentUser == undefined) {
-            this.props.getCurrentUser();
+            this.props.getCurrentUser(null, null );
         }
     }
     render() {
