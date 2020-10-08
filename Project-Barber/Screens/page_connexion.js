@@ -9,13 +9,14 @@ import {
 } from "react-native-responsive-screen";
 import {AsyncStorage} from "react-native";
 import {Avatar, Button, Card, Divider, Header} from 'react-native-elements';
-import {login} from "../Actions";
+import {login, setToken} from "../Actions";
 
 class Connexion extends React.Component {
     componentDidMount() {
         AsyncStorage.getItem("token").then((token) => {
             if (token) {
-                //TODO
+                this.props.setToken(token);
+                this.goToHome();
             }
         });
         this.state = {
@@ -36,21 +37,19 @@ class Connexion extends React.Component {
         this.setState({username: text});
     }
 
-    handleSubmit(e) {
+    handleSubmit() {
         //e.preventDefault();
-
         this.setState({submitted: true});
         const {username, password} = this.state;
         console.log(username, '   ', password);
         const {login} = this.props;
         if (username && password) {
-            //login(username, password, this.goToHome(), null);
+            login(username, password, this.goToHome, null);
         }
     }
 
     goToHome = () => {
-        console.log("TODO");
-        // this.props.navigation.navigate("Home");
+        this.props.navigation.navigate("Home");
     };
 
     goToInscription = () => {
@@ -116,7 +115,7 @@ class Connexion extends React.Component {
                         <Text
                             accessibilityRole='link'
                             style={[styles.center, styles.link]}
-                            onPress={this.goToInscription}
+                            onPress={() => this.goToInscription()}
                         > Inscrivez-vous </Text>
                     </View>
 
@@ -132,7 +131,7 @@ class Connexion extends React.Component {
                                     />
                                 }
                             //loading={this.state.loading}
-                            onPress={(e) => this.handleSubmit(e)}
+                            onPress={() => this.handleSubmit()}
                             title=" Connexion"
                             type='solid'
                         />
@@ -189,5 +188,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     login,
+    setToken
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Connexion);

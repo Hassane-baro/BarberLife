@@ -19,7 +19,9 @@ export const login = (username, password, onSuccess, onError) => async dispatch 
         headers: {'Content-Type': 'application/json'},
     };
     const bodyParameters = {
-        key: JSON.stringify({username, password})
+        username,
+        password
+        // key: {username, password}
     };
 
     const response = await axios.post(
@@ -31,7 +33,8 @@ export const login = (username, password, onSuccess, onError) => async dispatch 
         let {user, token} = res.data;
         AsyncStorage.setItem('user', JSON.stringify(user));
         AsyncStorage.setItem('token', JSON.stringify(token));
-        dispatch(success(user));
+        setToken(token);
+        dispatch({type: userConstants.GET_CURRENT_SUCCESS, user});
         onSuccess && onSuccess();
     }).catch((error) => {
         console.error(error);
@@ -39,17 +42,22 @@ export const login = (username, password, onSuccess, onError) => async dispatch 
         onError && onError();
     });
 
-    function request(user) {
-        return {type: userConstants.LOGIN_REQUEST, user}
-    }
+};
 
-    function success(user) {
-        return {type: userConstants.LOGIN_SUCCESS, user}
-    }
+function request(token) {
+    return {type: userConstants.LOGIN_REQUEST, token}
+}
 
-    function failure(error) {
-        return {type: userConstants.LOGIN_FAILURE, error}
-    }
+function success(token) {
+    return {type: userConstants.LOGIN_SUCCESS, token}
+}
+
+function failure(error) {
+    return {type: userConstants.LOGIN_FAILURE, error}
+}
+
+export const setToken = (token) => dispatch => {
+    dispatch(success(token));
 };
 
 export const logout = () => async dispatch =>{
