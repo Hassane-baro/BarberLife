@@ -9,13 +9,13 @@ import {
 } from "react-native-responsive-screen";
 import {AsyncStorage} from "react-native";
 import {Avatar, Button, Card, Divider, Header} from 'react-native-elements';
-import {login, setToken} from "../Actions";
+import {login, setUser} from "../Actions";
 
 class Connexion extends React.Component {
     componentDidMount() {
-        AsyncStorage.getItem("token").then((token) => {
-            if (token) {
-                this.props.setToken(token);
+        AsyncStorage.getItem("user").then((user) => {
+            if (user) {
+                this.props.setUser(user);
                 this.goToHome();
             }
         });
@@ -188,6 +188,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     login,
-    setToken
+    setUser
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Connexion);

@@ -3,13 +3,31 @@ import {API_KEY, FACEBOOK_APP_ID} from "../Constants/api.constants";
 import {SET_CURRENT_USER} from "./action-types";
 import {AsyncStorage} from "react-native";
 import {userConstants} from "../Constants/user.constants";
+import {authHeader} from "../Helper/auth-header"
+import {stringifyValueWithProperty} from "react-native-web/dist/exports/StyleSheet/compile";
 
 
 const USER_BASE_URL = "http://localhost:4545/api/v1";
 
-export const getCurrentUser = city => async dispatch => {
-    const response = await axios.get(`${USER_BASE_URL}?q=${city}&appid=${API_KEY}`);
-    dispatch({type: SET_CURRENT_USER, payload: response.data});
+export const getCurrentUser = token => async dispatch => {
+    dispatch(request({}));
+    const authorization = JSON.parse( JSON.stringify( authHeader() ) )
+    const headers = {
+        authorization
+    };
+    const response = await axios.get(
+        `${USER_BASE_URL}/utilisateur/me`,
+        {headers}
+    ).then((res) => {
+        console.log(res.data);
+        let user = res.data;
+        AsyncStorage.setItem('user', JSON.stringify(user));
+        setUser(user);
+        dispatch({type: userConstants.GET_CURRENT_SUCCESS, user});
+    }).catch((error) => {
+        console.error(error);
+        dispatch(failure(error));
+    });
 
 };
 
@@ -30,10 +48,9 @@ export const login = (username, password, onSuccess, onError) => async dispatch 
         config
     ).then((res) => {
         console.log(res.data);
-        let {user, token} = res.data;
+        let user = res.data;
         AsyncStorage.setItem('user', JSON.stringify(user));
-        AsyncStorage.setItem('token', JSON.stringify(token));
-        setToken(token);
+        setUser(user);
         dispatch({type: userConstants.GET_CURRENT_SUCCESS, user});
         onSuccess && onSuccess();
     }).catch((error) => {
@@ -44,20 +61,21 @@ export const login = (username, password, onSuccess, onError) => async dispatch 
 
 };
 
-function request(token) {
-    return {type: userConstants.LOGIN_REQUEST, token}
+function request(user) {
+    return {type: userConstants.LOGIN_REQUEST, user}
 }
 
-function success(token) {
-    return {type: userConstants.LOGIN_SUCCESS, token}
+function success(user) {
+    return {type: userConstants.LOGIN_SUCCESS, user}
 }
 
-function failure(error) {
-    return {type: userConstants.LOGIN_FAILURE, error}
+function failure(user) {
+    return {type: userConstants.LOGIN_FAILURE, user}
 }
 
-export const setToken = (token) => dispatch => {
-    dispatch(success(token));
+// initialisation du store avec le token en memoire
+export const setUser = (user) => dispatch => {
+    dispatch(success(user));
 };
 
 export const logout = () => async dispatch =>{

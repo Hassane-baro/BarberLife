@@ -17,12 +17,14 @@ export default function(state = initialState, action){
             return {
                 ... state,
                 isLoading: true,
-                token: action.token
+                token: action.user.token
             };
         case userConstants.LOGIN_SUCCESS:
             return {
+                ... state,
                 loggedIn: true,
-                token: action.token
+                isLoading : false,
+                token: action.user.token
             };
         case userConstants.LOGIN_FAILURE:
             return {
