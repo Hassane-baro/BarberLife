@@ -38,7 +38,7 @@ export default class CoiffeurItem extends React.Component
                             source= {{ uri: 'https://img.icons8.com/color/1600/avatar.png' } }
                         />
                         <View style={styles.content_container}>
-                            <View>
+                            
                                 <View style={styles.header_container} >
                                     <Text style={styles.names}>{user.nom +" "+ user.prenom}</Text>
                                     <Text style={styles.note}>Note</Text>
@@ -51,7 +51,7 @@ export default class CoiffeurItem extends React.Component
                                 </View>
 
 
-                            </View>
+                            
                         </View>
             
             </View>
