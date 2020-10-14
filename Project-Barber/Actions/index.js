@@ -7,7 +7,7 @@ import {authHeader} from "../Helper/auth-header"
 import {stringifyValueWithProperty} from "react-native-web/dist/exports/StyleSheet/compile";
 
 
-const USER_BASE_URL = "http://localhost:4545/api/v1";
+const USER_BASE_URL = "http://barberlife-api.herokuapp.com/api/v1";
 
 export const getCurrentUser = (onSuccess , onError) => async dispatch => {
     dispatch(request({}));
