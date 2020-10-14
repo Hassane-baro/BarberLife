@@ -49,8 +49,8 @@ class Connexion extends React.Component {
     }
 
     goToHome = () => {
-        // this.props.navigation.navigation("Home");
-        this.props.navigation.replace("Home");
+        this.props.navigation.navigate("Home");
+        // this.props.navigation.replace("Home");
     };
 
     goToInscription = () => {
@@ -133,7 +133,7 @@ class Connexion extends React.Component {
                                 }
                             //loading={this.state.loading}
                             onPress={() => this.handleSubmit()}
-                            title=" Connexion"
+                            title="Connexion"
                             type='solid'
                         />
                     </View>

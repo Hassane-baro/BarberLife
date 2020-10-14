@@ -22,6 +22,13 @@ export default function(state = initialState, action){
             return {
                 isLoading: false
             };
+
+        case userConstants.GET_NEARTOME_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                listCoiffeur: action.barbers
+            };
         /*else if(action.type === SET_FORECAST_WEATHER){
             return {
                 ...state,

@@ -1,17 +1,16 @@
 import axios from "axios";
 import {API_KEY, FACEBOOK_APP_ID} from "../Constants/api.constants";
-import {SET_CURRENT_USER} from "./action-types";
 import {AsyncStorage} from "react-native";
 import {userConstants} from "../Constants/user.constants";
 import {authHeader} from "../Helper/auth-header"
-import {stringifyValueWithProperty} from "react-native-web/dist/exports/StyleSheet/compile";
 
 
-const USER_BASE_URL = "http://localhost:4545/api/v1";
+//const USER_BASE_URL = "http://localhost:4545/api/v1";
+const USER_BASE_URL = "https://barberlife-api.herokuapp.com/api/v1";
 
 export const getCurrentUser = (onSuccess , onError) => async dispatch => {
     dispatch(request({}));
-    const authorization = JSON.parse( JSON.stringify( authHeader() ) )
+    const authorization = JSON.parse( JSON.stringify( authHeader() ) );
     const headers = {
         authorization
     };
@@ -31,6 +30,32 @@ export const getCurrentUser = (onSuccess , onError) => async dispatch => {
         onError && onError();
     });
 
+};
+
+export const getNearToMeBarber = (user) => async dispatch => {
+    let tabBarber = [];
+    dispatch({type: userConstants.GET_NEARTOME_REQUEST, tabBarber });
+    const authorization = JSON.parse( JSON.stringify(  authHeader() ) );
+    console.log(authorization);
+    const config = {
+        headers: { authorization, 'Content-Type': 'application/json'},
+    };
+    const bodyParameters = {
+        longitude : user.longitude,
+        latitude : user.latitude,
+    };
+    const response = await axios.post(
+        `${USER_BASE_URL}/utilisateur/neartome`,
+        bodyParameters,
+        config
+    ).then((res) => {
+        console.log(res.data);
+        let barbers = res.data;
+        dispatch({type: userConstants.GET_NEARTOME_SUCCESS, barbers});
+    }).catch((error) => {
+        console.error(error);
+        dispatch({type: userConstants.GET_NEARTOME_FAILURE, error});
+    });
 };
 
 export const login = (username, password, onSuccess, onError) => async dispatch => {
