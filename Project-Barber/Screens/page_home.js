@@ -1,11 +1,22 @@
 import React from "react";
 import {connect} from "react-redux";
-import {AsyncStorage, StyleSheet, Text, View} from "react-native";
+import {AsyncStorage, StyleSheet, Text, View, FlatList} from "react-native";
 import {getCurrentUser, getNearToMeBarber} from "../Actions";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {Button} from "react-native-elements";
+import CoiffeurItems from '../Component/coiffeurItems'
 
 class Home extends React.Component {
+    constructor(props)
+    {
+        super(props)
+       
+        this.state =
+        {
+           coiffeurs:""
+        }
+    }
+
     componentDidMount() {
         if(this.props.currentUser == null || this.props.currentUser == undefined) {
             this.props.getCurrentUser(null, null );
@@ -15,23 +26,48 @@ class Home extends React.Component {
     getList = () => {
         this.props.getNearToMeBarber(this.props.currentUser);
     };
+    displayCoiffeur()
+    {
+            //this.setState.coiffeurs = this.props.listCoiffeur
+            return(
+
+                /*<CoiffeurList
+                    coiffeurs={this.state.coiffeurs}
+                    navigation = {this.props.navigation}
+                />*/
+                <FlatList
+                    data={this.props.listCoiffeur}
+                    keyExtractor= {(item) => item.id.toString()}
+                    renderItem= {({item}) => (
+                    <CoiffeurItems
+                        coiffeur = {item}
+                        navigation = {this.props.navigation}
+                    />
+                    )}
+                />
+                
+            )
+            
+    }
 
     render() {
         return (
             <View style={styles.container}>
                 { this.props.currentUser && this.props.currentUser.profil == "CLIENT" &&
                 <View>
-                    <Text>Liste de coiffeur </Text>
+                   
                     <Button
                         buttonStyle={{bottom: 0}}
                         onPress={() => this.getList()}
-                        title="refresh"
+                        title="Rechercher"
                         type='solid'
+
                     />
                 </View> }
                 { this.props.listCoiffeur &&
-                <View><Text>MA liste</Text></View> }
-                <Text>Home de {this.props.currentUser && this.props.currentUser.prenom}</Text>
+                         this.displayCoiffeur()
+                }
+                
             </View>
         );
     }
@@ -40,10 +76,18 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        //backgroundColor: '#fff',
+        //alignItems: 'center',
+        //justifyContent: 'center',
+        //marginTop:20
     },
+    textinput:{
+        marginLeft:5,
+        marginRight:5,
+        height:50,
+        borderWidth:1,
+        paddingLeft:5
+    }
 });
 
 const mapStateToProps = state => {

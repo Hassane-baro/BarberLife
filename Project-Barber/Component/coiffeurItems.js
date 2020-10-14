@@ -1,8 +1,10 @@
 import React from 'react';
 
 //import des objets utiles
-import { View } from 'react-native';
-import { ListItem }  from 'react-native-elements';
+import { View,Text,StyleSheet,Image } from 'react-native';
+import { ListItem } from 'react-native-elements';
+import { max } from 'react-native-reanimated';
+
 
 //Retourne le coiffeur courant de page_commande pour l'afficher dans une FlatiList
 export default class CoiffeurItem extends React.Component
@@ -21,26 +23,102 @@ export default class CoiffeurItem extends React.Component
 
     render()
     {
-        console.log("COIFFEURITEMS: "+JSON.stringify(this.props))
+        //console.log("COIFFEURITEMS: "+JSON.stringify(this.props))
       
-        // props donner par le component search qui contient les films pour alimenter le template filmItem
-        const user = this.props.user
+       
+        const user = this.props.coiffeur
        
         return(
-
-                <View >
+            
+            <View style={styles.main_container} >
                 
-                    <ListItem
-                        key={user.id_user}
-                        leftAvatar={{ source: { uri: 'https://img.icons8.com/color/1600/avatar.png' } }}
-                        title={user.nom_user +" "+ user.prenom_user}
-                        bottomDivider
-                        onPress={() => this.gotToCoiffeur(user)}
-                    />
-                   
-                </View>
+
+                        <Image
+                            style={styles.image}
+                            source= {{ uri: 'https://img.icons8.com/color/1600/avatar.png' } }
+                        />
+                        <View style={styles.content_container}>
+                            <View>
+                                <View style={styles.header_container} >
+                                    <Text style={styles.names}>{user.nom +" "+ user.prenom}</Text>
+                                    <Text style={styles.note}>Note</Text>
+                                </View>
+                                <View style={styles.description}>
+                                    <Text style={styles.description_text} numberOfLines={6}>Je suis un très bon coiffeur je vous promet de ne pas vous rater pitié prenez moi !</Text>
+                                </View>
+                                <View style={styles.date}>
+                                    <Text style={styles.date_text}>Coupe depuis 2016</Text>
+                                </View>
+
+
+                            </View>
+                        </View>
+            
+            </View>
             
         )
     }
 
+    
+
 }
+const styles = StyleSheet.create({
+    
+    main_container:{
+        height:190,
+        flexDirection:'row',
+        backgroundColor:'blue',
+        
+        
+    },
+    image:{
+        width:120,
+        height:180,
+        margin:5,
+        backgroundColor:'gray'
+    },
+    content_container:{
+        flex:1,
+        margin:5,
+        backgroundColor:'green'
+    },
+    header_container:{
+        //flex:3,
+        flexDirection:'row',
+        backgroundColor:'red'
+        
+    },
+    names:{
+        fontWeight:'bold',
+        fontSize:18,
+        //flex:1,
+        flexWrap:'wrap',
+        paddingRight:10
+    },
+    note:{
+        fontWeight:'bold',
+        fontSize:21,
+        color:'#666666',
+        textAlign:'right'
+
+    },
+    description:{
+        //flex:7
+        backgroundColor:'yellow'
+    },
+    description_text:{
+        fontStyle:'italic',
+        color:'#666666'
+    },
+    date:{
+        //flex:5,
+        backgroundColor:'orange'
+    },
+    date_text:{
+        textAlign:'right',
+        fontSize:14
+    }
+
+
+
+})

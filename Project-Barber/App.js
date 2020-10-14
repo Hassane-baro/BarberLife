@@ -11,21 +11,25 @@ import Home from "./Screens/page_home";
 
 export default function App() {
     const Stack = createStackNavigator();
-
+   
     return (
+       
+        
         <Provider store={store}>
             {Platform.OS === 'ios' && (
                 <StatusBar barStyle={false ? 'light-content' : 'dark-content'} />
             )}
             <NavigationContainer>
-                {/*<HomeStackScreen />*/}
+                
                 <Stack.Navigator initialRouteName="Connexion">
                     <Stack.Screen name="Connexion" component={Connexion} />
                     <Stack.Screen name="Home" component={HomeStackScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
 
-        </Provider>);
+        </Provider>
+    )
+    
 }
 
 const styles = StyleSheet.create({
