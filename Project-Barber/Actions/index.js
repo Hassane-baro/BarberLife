@@ -2,7 +2,7 @@ import axios from "axios";
 import {API_KEY, FACEBOOK_APP_ID} from "../Constants/api.constants";
 import {AsyncStorage} from "react-native";
 import {userConstants} from "../Constants/user.constants";
-import {authHeader} from "../Helper/auth-header"
+import {authHeader} from "../Helper/auth-header";
 
 
 //const USER_BASE_URL = "http://localhost:4545/api/v1";
