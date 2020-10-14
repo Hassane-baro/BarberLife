@@ -5,16 +5,17 @@ import {userConstants} from "../Constants/user.constants";
 import {authHeader} from "../Helper/auth-header";
 
 
-//const USER_BASE_URL = "http://localhost:4545/api/v1";
-const USER_BASE_URL = "https://barberlife-api.herokuapp.com/api/v1";
+const USER_BASE_URL = "http://localhost:4545/api/v1";
+// const USER_BASE_URL = "https://barberlife-api.herokuapp.com/api/v1";
 
-export const getCurrentUser = (onSuccess , onError) => async dispatch => {
+export const getCurrentUser = (onSuccess , onError) => dispatch => {
     dispatch(request({}));
     const authorization = JSON.parse( JSON.stringify( authHeader() ) );
     const headers = {
         authorization
     };
-    const response = await axios.get(
+
+    axios.get(
         `${USER_BASE_URL}/utilisateur/me`,
         {headers}
     ).then((res) => {
@@ -34,17 +35,18 @@ export const getCurrentUser = (onSuccess , onError) => async dispatch => {
 
 export const getNearToMeBarber = (user) => async dispatch => {
     let tabBarber = [];
-    dispatch({type: userConstants.GET_NEARTOME_REQUEST, tabBarber });
-    const authorization = JSON.parse( JSON.stringify(  authHeader() ) );
-    console.log(authorization);
+    dispatch({type: userConstants.GET_NEARTOME_REQUEST, tabBarber});
+    const authorization = authHeader().then((e) => console.log(e));
+    //console.log(authorization);
     const config = {
-        headers: { authorization, 'Content-Type': 'application/json'},
+        headers: {authorization, 'Content-Type': 'application/json'},
     };
     const bodyParameters = {
-        longitude : user.longitude,
-        latitude : user.latitude,
+        longitude: user.longitude,
+        latitude: user.latitude,
     };
-    const response = await axios.post(
+
+    axios.post(
         `${USER_BASE_URL}/utilisateur/neartome`,
         bodyParameters,
         config
@@ -58,7 +60,7 @@ export const getNearToMeBarber = (user) => async dispatch => {
     });
 };
 
-export const login = (username, password, onSuccess, onError) => async dispatch => {
+export const login = (username, password, onSuccess, onError) => dispatch => {
     dispatch(request({username}));
     const config = {
         headers: {'Content-Type': 'application/json'},
@@ -69,7 +71,7 @@ export const login = (username, password, onSuccess, onError) => async dispatch 
         // key: {username, password}
     };
 
-    const response = await axios.post(
+    axios.post(
         `${USER_BASE_URL}/authentification`,
         bodyParameters,
         config
@@ -105,7 +107,9 @@ export const setUser = (user) => dispatch => {
     dispatch(success(user));
 };
 
-export const logout = () => async dispatch =>{
+export const logout = () => dispatch =>{
     // remove user from local storage to log user out
-    AsyncStorage.removeItem('user');
-}
+    AsyncStorage.removeItem('user').then( () => {
+        console.log("TODO");
+    });
+};

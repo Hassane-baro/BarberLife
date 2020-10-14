@@ -4,12 +4,16 @@ import React from 'react';
 import { View,Text,StyleSheet,Image } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { max } from 'react-native-reanimated';
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 
 //Retourne le coiffeur courant de page_commande pour l'afficher dans une FlatiList
 export default class CoiffeurItem extends React.Component
 {
-     
+
     //Constructeur
     constructor(props)
     {
@@ -24,21 +28,22 @@ export default class CoiffeurItem extends React.Component
     render()
     {
         //console.log("COIFFEURITEMS: "+JSON.stringify(this.props))
-      
-       
+
+
         const user = this.props.coiffeur
-       
+
         return(
-            
+
             <View style={styles.main_container} >
-                
+
 
                         <Image
                             style={styles.image}
-                            source= {{ uri: 'https://img.icons8.com/color/1600/avatar.png' } }
+                            //source= {{ uri: 'https://img.icons8.com/color/1600/avatar.png' } }
+                            source= {{ uri: user.img } }
                         />
                         <View style={styles.content_container}>
-                            
+
                                 <View style={styles.header_container} >
                                     <Text style={styles.names}>{user.nom +" "+ user.prenom}</Text>
                                     <Text style={styles.note}>Note</Text>
@@ -51,29 +56,28 @@ export default class CoiffeurItem extends React.Component
                                 </View>
 
 
-                            
+
                         </View>
-            
+
             </View>
-            
+
         )
     }
 
-    
+
 
 }
 const styles = StyleSheet.create({
-    
+
     main_container:{
-        height:190,
+        height:hp("20%"),
         flexDirection:'row',
         backgroundColor:'blue',
-        
-        
+
     },
     image:{
-        width:120,
-        height:180,
+        width:wp("30%"),
+        height:hp("18%"),
         margin:5,
         backgroundColor:'gray'
     },
@@ -83,17 +87,17 @@ const styles = StyleSheet.create({
         backgroundColor:'green'
     },
     header_container:{
-        //flex:3,
+        flex:3,
         flexDirection:'row',
         backgroundColor:'red'
-        
+
     },
     names:{
         fontWeight:'bold',
         fontSize:18,
-        //flex:1,
+        flex:1,
         flexWrap:'wrap',
-        paddingRight:10
+        paddingRight:wp("0%")
     },
     note:{
         fontWeight:'bold',
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
 
     },
     description:{
-        //flex:7
+        flex:7,
         backgroundColor:'yellow'
     },
     description_text:{
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
         color:'#666666'
     },
     date:{
-        //flex:5,
+        flex:5,
         backgroundColor:'orange'
     },
     date_text:{
