@@ -7,6 +7,7 @@ import Home from "../Screens/page_home";
 import Boutique from "../Screens/page_boutique";
 import Profil from "../Screens/page_profil";
 
+
 const Tab = createBottomTabNavigator();
 
 export const HomeStackScreen = () => {
@@ -22,7 +23,7 @@ export const HomeStackScreen = () => {
 
 const SettingsStack = createStackNavigator();
 
-export const SettingsStackScreen = () => {
+ export const SettingsStackScreen = () => {
     return (
         <SettingsStack.Navigator>
             <SettingsStack.Screen name="Mon Profil" component={Home} />
@@ -41,3 +42,4 @@ export const ClientHomeStackScreen = () => {
         </ClientHomeStack.Navigator>
     );
 };
+

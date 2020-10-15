@@ -49,8 +49,8 @@ class Connexion extends React.Component {
     }
 
     goToHome = () => {
-        // this.props.navigation.navigate("Home");
-        this.props.navigation.replace("Home");
+         this.props.navigation.navigate("Home");
+        //this.props.navigation.replace("Home");
     };
 
     goToInscription = () => {
