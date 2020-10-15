@@ -20,10 +20,9 @@ export default class CoiffeurItem extends React.Component
         super(props)
     }
 
-    gotToCoiffeur(user)
-    {
-        this.props.navigation.navigate("Coiffeur", {user});
-    }
+    gotToCoiffeur = (user) => {
+        this.props.navigation.navigate("Profil", {user : user});
+    };
 
     render()
     {
@@ -33,13 +32,13 @@ export default class CoiffeurItem extends React.Component
         const user = this.props.coiffeur
 
         return(
-            <ListItem 
+            <ListItem
             key={user.id}
             onPress={() => this.gotToCoiffeur(user)}
             bottomDivider
             >
             <ListItem.Content style={styles.main_container} >
-            
+
 
 
                         <Image
@@ -64,7 +63,7 @@ export default class CoiffeurItem extends React.Component
 
                         </View>
 
-            
+
             </ListItem.Content>
             </ListItem>
 
