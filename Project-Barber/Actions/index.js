@@ -1,11 +1,10 @@
 import axios from "axios";
-import {API_KEY, FACEBOOK_APP_ID} from "../Constants/api.constants";
 import {AsyncStorage} from "react-native";
 import {userConstants} from "../Constants/user.constants";
 import {authHeader} from "../Helper/auth-header";
 
 
-const USER_BASE_URL = "http://localhost:4545/api/v1";
+ const USER_BASE_URL = "http://localhost:4545/api/v1";
 // const USER_BASE_URL = "https://barberlife-api.herokuapp.com/api/v1";
 
 export const getCurrentUser = (onSuccess , onError) => dispatch => {
@@ -22,7 +21,7 @@ export const getCurrentUser = (onSuccess , onError) => dispatch => {
         console.log(res.data);
         let user = res.data;
         AsyncStorage.setItem('user', JSON.stringify(user));
-        setUser(user);
+        //setUser(user);
         dispatch({type: userConstants.GET_CURRENT_SUCCESS, user});
         onSuccess && onSuccess();
     }).catch((error) => {
@@ -36,10 +35,9 @@ export const getCurrentUser = (onSuccess , onError) => dispatch => {
 export const getNearToMeBarber = (user) => async dispatch => {
     let tabBarber = [];
     dispatch({type: userConstants.GET_NEARTOME_REQUEST, tabBarber});
-    const authorization = authHeader().then((e) => console.log(e));
-    //console.log(authorization);
+    const authorization = await authHeader();
     const config = {
-        headers: {authorization, 'Content-Type': 'application/json'},
+        headers: {...authorization, 'Content-Type': 'application/json'},
     };
     const bodyParameters = {
         longitude: user.longitude,
@@ -47,7 +45,7 @@ export const getNearToMeBarber = (user) => async dispatch => {
     };
 
     axios.post(
-        `${USER_BASE_URL}/utilisateur/neartome`,
+        `${USER_BASE_URL}/barber/neartome`,
         bodyParameters,
         config
     ).then((res) => {
@@ -68,7 +66,6 @@ export const login = (username, password, onSuccess, onError) => dispatch => {
     const bodyParameters = {
         username,
         password
-        // key: {username, password}
     };
 
     axios.post(

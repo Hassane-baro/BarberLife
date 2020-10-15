@@ -1,14 +1,12 @@
 import {userConstants} from "../Constants/user.constants";
 import {AsyncStorage} from "react-native";
 
-const getUser = async () => await JSON.parse(AsyncStorage.getItem('user'));
-/*const initialState = getUser().then( user => {
+/*const initialState = getUser().then( user =>
     if(!user) return {} ;
     return { loggedIn: true, user }
 });*/
 const initialState = {
-    token : undefined,
-    loggedIn : false
+    token : undefined
 };
 
 export default function(state = initialState, action){
@@ -17,7 +15,7 @@ export default function(state = initialState, action){
             return {
                 ... state,
                 isLoading: true,
-                token: action.user.token
+                token: {}
             };
         case userConstants.LOGIN_SUCCESS:
             return {
@@ -28,6 +26,7 @@ export default function(state = initialState, action){
             };
         case userConstants.LOGIN_FAILURE:
             return {
+                loggedIn: false,
                 isLoading : false
             };
         case userConstants.LOGOUT:

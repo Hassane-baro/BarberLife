@@ -2,32 +2,27 @@ import {SET_CURRENT_USER} from "../Actions/action-types";
 import {userConstants} from "../Constants/user.constants";
 
 const initialState = {
-    currentUser : undefined
+    listCoiffeur : undefined
 };
 export default function(state = initialState, action){
     switch(action.type) {
-        case userConstants.GET_CURRENT_REQUEST:
+        case userConstants.GET_NEARTOME_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                currentUser: {}
+                listCoiffeur: {}
             };
-        case userConstants.GET_CURRENT_SUCCESS:
-            return {
-                isLoading: false,
-                currentUser: action.user
-            };
-        case userConstants.GET_CURRENT_FAILURE:
-            return {
-                isLoading: false,
-                currentUser: undefined
-            };
-        /*else if(action.type === SET_FORECAST_WEATHER){
+        case userConstants.GET_NEARTOME_SUCCESS:
             return {
                 ...state,
-                forecastWeather : action.payload
+                isLoading: false,
+                listCoiffeur: action.barbers
             };
-        }*/
+        case userConstants.GET_NEARTOME_FAILURE:
+            return {
+                isLoading: false,
+                listCoiffeur: undefined
+            };
         default:
             return state;
     }

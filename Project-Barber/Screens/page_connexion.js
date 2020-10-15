@@ -8,7 +8,7 @@ import {
     heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import {AsyncStorage} from "react-native";
-import {Avatar, Button, Card, Divider, Header} from 'react-native-elements';
+import {Avatar, Button, Divider, Header, Image} from 'react-native-elements';
 import {login, setUser} from "../Actions";
 
 class Connexion extends React.Component {
@@ -61,19 +61,10 @@ class Connexion extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Card
-                    title='CONNEXION'
-                    image={require('../Images/logo-barberLife.png')}
-                    containerStyle={
-                        {
-                            borderRadius: wp("2%"),
-                            opacity: "0.98",
-                            height: hp("90%"),
-                            width: wp("90%"),
-                            marginTop: hp("5%")
-                        }
-                    }
-                >
+                <Image
+                    source={require('../Images/logo-barberLife.png')}
+                    style={{flex: 1}}
+                />
                     <View>
                         <Input
                             label='Login/ Mail'
@@ -137,8 +128,6 @@ class Connexion extends React.Component {
                             type='solid'
                         />
                     </View>
-
-                </Card>
             </View>
 
         )

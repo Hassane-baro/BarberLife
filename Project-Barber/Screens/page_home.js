@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import {AsyncStorage, StyleSheet, Text, View, FlatList} from "react-native";
 import {getCurrentUser, getNearToMeBarber} from "../Actions";
-import Icon from "react-native-vector-icons/FontAwesome";
 import {Button} from "react-native-elements";
 import CoiffeurItems from '../Component/coiffeurItems'
 
@@ -10,7 +9,7 @@ class Home extends React.Component {
     constructor(props)
     {
         super(props)
-       
+
         this.state =
         {
            coiffeurs:""
@@ -45,9 +44,9 @@ class Home extends React.Component {
                     />
                     )}
                 />
-                
+
             )
-            
+
     }
 
     render() {
@@ -55,7 +54,7 @@ class Home extends React.Component {
             <View style={styles.container}>
                 { this.props.currentUser && this.props.currentUser.profil == "CLIENT" &&
                 <View>
-                   
+
                     <Button
                         buttonStyle={{bottom: 0}}
                         onPress={() => this.getList()}
@@ -63,11 +62,13 @@ class Home extends React.Component {
                         type='solid'
 
                     />
+                    { this.props.listCoiffeur &&
+                    this.displayCoiffeur()
+                    }
+
                 </View> }
-                { this.props.listCoiffeur &&
-                         this.displayCoiffeur()
-                }
-                
+
+
             </View>
         );
     }
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         currentUser : state.utilisateur.currentUser,
-        listCoiffeur : state.utilisateur.listCoiffeur
+        listCoiffeur : state.barber.listCoiffeur
     }
 };
 
