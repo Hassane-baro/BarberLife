@@ -4,8 +4,8 @@ import {userConstants} from "../Constants/user.constants";
 import {authHeader} from "../Helper/auth-header";
 
 
- // const USER_BASE_URL = "http://localhost:4545/api/v1";
- const USER_BASE_URL = "https://barberlife-api.herokuapp.com/api/v1";
+const USER_BASE_URL = "http://localhost:4545/api/v1";
+ // const USER_BASE_URL = "https://barberlife-api.herokuapp.com/api/v1";
 
 export const getCurrentUser = (onSuccess , onError) => dispatch => {
     dispatch(request({}));
@@ -104,9 +104,10 @@ export const setUser = (user) => dispatch => {
     dispatch(success(user));
 };
 
-export const logout = () => dispatch =>{
+export const logout = () => async dispatch =>{
     // remove user from local storage to log user out
     AsyncStorage.removeItem('user').then( () => {
         console.log("TODO");
     });
+    dispatch({type: userConstants.LOGOUT, user : undefined});
 };

@@ -4,12 +4,11 @@ import {AsyncStorage, StyleSheet, Text, View, FlatList} from "react-native";
 import {getCurrentUser, getNearToMeBarber} from "../Actions";
 import {Button} from "react-native-elements";
 import CoiffeurItems from '../Component/coiffeurItems'
+import {AuthContext} from "../context";
 
 class Home extends React.Component {
-    constructor(props)
-    {
+    constructor(props){
         super(props)
-
         this.state =
         {
            coiffeurs:""

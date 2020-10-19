@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from "react-redux";
 import {Input,} from 'react-native-elements';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
@@ -10,8 +10,9 @@ import {
 import {AsyncStorage} from "react-native";
 import {Avatar, Button, Divider, Header, Image} from 'react-native-elements';
 import {login, setUser} from "../Actions";
+import { AuthContext } from "../context";
 
-class Connexion extends React.Component {
+/*class Connexion extends React.Component {
     componentDidMount() {
         AsyncStorage.getItem("user").then((user) => {
             if (user) {
@@ -49,7 +50,8 @@ class Connexion extends React.Component {
     }
 
     goToHome = () => {
-         this.props.navigation.navigate("Home");
+
+         // this.props.navigation.navigate("Home");
         //this.props.navigation.replace("Home");
     };
 
@@ -181,3 +183,103 @@ const mapDispatchToProps = {
     setUser
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Connexion);
+*/
+
+export function Connexion() {
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    const { signIn } = React.useContext(AuthContext);
+
+    return (
+        <View>
+            <Input
+                label='Login/ Mail'
+                name="username"
+                labelStyle={{fontWeight: 'bold', fontStyle: 'italic'}}
+                placeholder='Saisissez votre login/ mail'
+                leftIcon=
+                    {
+                        <Icon
+                            name='user-circle-o'
+                            size={24}
+                            color='black'
+                        />
+                    }
+                onChangeText={setUsername}
+                value={username}
+            />
+            <Input
+                label='Mot de passe'
+                name="password"
+                labelStyle={{fontWeight: 'bold', fontStyle: 'italic'}}
+                placeholder="Saisissez votre mot de passe"
+                secureTextEntry={true}
+                leftIcon=
+                    {
+                        <Icon
+                            name='unlock-alt'
+                            size={24}
+                            color='black'
+                        />
+                    }
+                onChangeText={setPassword}
+                value={password}
+            />
+            <View>
+                <Button
+                    buttonStyle={{bottom: 0}}
+                    icon=
+                        {
+                            <Icon
+                                name="beer"
+                                size={15}
+                                color="white"
+                            />
+                        }
+                    //loading={this.state.loading}
+                    onPress={() => signIn({ username, password })}
+                    title="Connexion"
+                    type='solid'
+                />
+            </View>
+           </View>
+    );
+}
+
+const styles = StyleSheet.create(
+    {
+        center:
+            {
+                textAlign: 'center'
+            },
+        link:
+            {
+                color: 'blue',
+                fontWeight: 'bold'
+            },
+        space:
+            {
+                marginTop: 10,
+                marginBottom: 10
+            },
+        container:
+            {
+                flex: 1,
+                height: '100%',
+                //backgroundColor: 'gray'
+            },
+        text:
+            {
+                //backgroundColor: 'black',
+                opacity: 1,
+                color: "white",
+                fontWeight: 'bold'
+            },
+        image:
+            {
+                flex: 1,
+                resizeMode: "cover",
+                justifyContent: "center"
+            }
+    });
