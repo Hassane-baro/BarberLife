@@ -8,18 +8,17 @@ import {createAppContainer} from 'react-navigation'
 
   const HomeStackBis = createStackNavigator({
     Connexion:{
-        screen:Connexion,
-        navigationOptions:{
-            title:'retour',
-
-        }
+        screen:Connexion
     },
     Home:{
-        screen: Home
+        screen: Home,
+        navigationOptions:{
+            title:'retour'
+        }
     },
     Profil:{
         screen: Profil
     }
-})
+});
 
 export default createAppContainer(HomeStackBis)
