@@ -32,15 +32,8 @@ export default class CoiffeurItem extends React.Component
         const user = this.props.coiffeur
 
         return(
-            <ListItem
-            key={user.id}
-            onPress={() => this.gotToCoiffeur(user)}
-            bottomDivider
-            >
-            <ListItem.Content style={styles.main_container} >
-
-
-
+           
+                    <View style={styles.main_container}>
                         <Image
                             style={styles.image}
                             source= {{ uri: 'https://img.icons8.com/color/1600/avatar.png' } }
@@ -62,10 +55,10 @@ export default class CoiffeurItem extends React.Component
 
 
                         </View>
+                    </View>
 
 
-            </ListItem.Content>
-            </ListItem>
+          
 
         )
     }
