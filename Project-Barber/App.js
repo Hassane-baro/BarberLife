@@ -46,9 +46,7 @@ const HomeStackScreen = () => (
         <HomeStack.Screen
             name="Profil"
             component={Profil}
-            options={({ route }) => ({
-                title: route.params.name
-            })}
+
         />
     </HomeStack.Navigator>
 );

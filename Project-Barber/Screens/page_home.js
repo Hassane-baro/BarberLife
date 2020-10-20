@@ -24,6 +24,10 @@ class Home extends React.Component {
     getList = () => {
         this.props.getNearToMeBarber(this.props.currentUser);
     };
+    goToProfil = (coiffeur) => {
+        console.log(coiffeur)
+        this.props.navigation.navigate("Profil", {coiffeur : coiffeur})
+    }
     displayCoiffeur()
     {
             //this.setState.coiffeurs = this.props.listCoiffeur
@@ -39,6 +43,7 @@ class Home extends React.Component {
                     renderItem= {({item}) => (
                     <CoiffeurItems
                         coiffeur = {item}
+                        goToProfil = {this.goToProfil}
                         navigation = {this.props.navigation}
                     />
                     )}

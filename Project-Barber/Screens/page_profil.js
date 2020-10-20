@@ -11,17 +11,21 @@ class Profil extends React.Component {
         }
     }
     componentDidMount() {
-        this.setState({ u : this.props.route.params.user} );
+        //this.setState({ u : this.props.route.params.coiffeur} );
+        //console.log(this.props );
     }
 
     render() {
+        const u = this.props.route.params.coiffeur
+        console.log(u)
         return (
             <View style={styles.container}>
                 <Button
                     title="Go to back"
                     onPress={() => this.props.navigation.goBack()}
                 />
-                <Text>Profil pour { this.state.u && this.state.u.prenom }</Text>
+                {<Text>Profil pour {u && u.nom }</Text>
+                }
             </View>
         );
     }

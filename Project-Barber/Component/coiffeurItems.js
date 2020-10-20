@@ -1,7 +1,7 @@
 import React from 'react';
 
 //import des objets utiles
-import { View,Text,StyleSheet,Image } from 'react-native';
+import { View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { max } from 'react-native-reanimated';
 import {
@@ -30,10 +30,15 @@ export default class CoiffeurItem extends React.Component
 
 
         const user = this.props.coiffeur
+        const profil = this.props.goToProfil
 
         return(
-           
-                    <View style={styles.main_container}>
+
+
+
+                    <TouchableOpacity style={styles.main_container}
+                        onPress={() => profil(user)}
+                    >
                         <Image
                             style={styles.image}
                             source= {{ uri: 'https://img.icons8.com/color/1600/avatar.png' } }
@@ -55,10 +60,10 @@ export default class CoiffeurItem extends React.Component
 
 
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
 
-          
+
 
         )
     }
